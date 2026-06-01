@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Калькулятор мощности ИБП</title>
+    <title data-i18n="pageTitle">Калькулятор мощности ИБП</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -22,57 +22,57 @@
     <div class="device-template" id="deviceTemplate" style="display:none;">
         <div class="device-row">
             <div class="device-name">
-                <label>Устройство</label>
+                <label data-i18n="deviceLabel">Устройство</label>
                 <select class="device-select">
-                    <option value="custom">— Своё значение —</option>
-                    <optgroup label="💻 Компьютеры">
-                        <option value="office_pc" data-watts="250">ПК офисный (~250 Вт)</option>
-                        <option value="home_pc" data-watts="400">ПК домашний (~400 Вт)</option>
-                        <option value="gaming_pc" data-watts="650">ПК игровой (~650 Вт)</option>
-                        <option value="workstation" data-watts="900">Рабочая станция (~900 Вт)</option>
-                        <option value="mini_pc" data-watts="65">Мини-ПК / неттоп (~65 Вт)</option>
+                    <option value="custom" data-i18n="customOpt">— Своё значение —</option>
+                    <optgroup data-i18n="grp_computers" label="💻 Компьютеры">
+                        <option value="office_pc" data-watts="250" data-i18n="opt_office_pc">ПК офисный (~250 Вт)</option>
+                        <option value="home_pc" data-watts="400" data-i18n="opt_home_pc">ПК домашний (~400 Вт)</option>
+                        <option value="gaming_pc" data-watts="650" data-i18n="opt_gaming_pc">ПК игровой (~650 Вт)</option>
+                        <option value="workstation" data-watts="900" data-i18n="opt_workstation">Рабочая станция (~900 Вт)</option>
+                        <option value="mini_pc" data-watts="65" data-i18n="opt_mini_pc">Мини-ПК / неттоп (~65 Вт)</option>
                     </optgroup>
-                    <optgroup label="🖥 Мониторы">
-                        <option value="monitor_led" data-watts="35">Монитор LED 22–24" (~35 Вт)</option>
-                        <option value="monitor_large" data-watts="65">Монитор 27–32" (~65 Вт)</option>
-                        <option value="monitor_ultrawide" data-watts="80">Монитор ultrawide (~80 Вт)</option>
+                    <optgroup data-i18n="grp_monitors" label="🖥 Мониторы">
+                        <option value="monitor_led" data-watts="35" data-i18n="opt_monitor_led">Монитор LED 22–24" (~35 Вт)</option>
+                        <option value="monitor_large" data-watts="65" data-i18n="opt_monitor_large">Монитор 27–32" (~65 Вт)</option>
+                        <option value="monitor_ultrawide" data-watts="80" data-i18n="opt_monitor_ultrawide">Монитор ultrawide (~80 Вт)</option>
                     </optgroup>
-                    <optgroup label="🖨 Периферия">
-                        <option value="ip_phone" data-watts="5">IP-телефон (~5 Вт)</option>
-                        <option value="printer" data-watts="400">Принтер лазерный (~400 Вт)</option>
-                        <option value="ink_printer" data-watts="30">Принтер струйный (~30 Вт)</option>
-                        <option value="mfp" data-watts="600">МФУ (~600 Вт)</option>
-                        <option value="scanner" data-watts="25">Сканер (~25 Вт)</option>
-                        <option value="speakers" data-watts="20">Колонки (~20 Вт)</option>
-                        <option value="webcam" data-watts="5">Веб-камера (~5 Вт)</option>
+                    <optgroup data-i18n="grp_peripherals" label="🖨 Периферия">
+                        <option value="ip_phone" data-watts="5" data-i18n="opt_ip_phone">IP-телефон (~5 Вт)</option>
+                        <option value="printer" data-watts="400" data-i18n="opt_printer">Принтер лазерный (~400 Вт)</option>
+                        <option value="ink_printer" data-watts="30" data-i18n="opt_ink_printer">Принтер струйный (~30 Вт)</option>
+                        <option value="mfp" data-watts="600" data-i18n="opt_mfp">МФУ (~600 Вт)</option>
+                        <option value="scanner" data-watts="25" data-i18n="opt_scanner">Сканер (~25 Вт)</option>
+                        <option value="speakers" data-watts="20" data-i18n="opt_speakers">Колонки (~20 Вт)</option>
+                        <option value="webcam" data-watts="5" data-i18n="opt_webcam">Веб-камера (~5 Вт)</option>
                     </optgroup>
-                    <optgroup label="🌐 Сеть и хранение">
-                        <option value="router" data-watts="15">Роутер (~15 Вт)</option>
-                        <option value="switch" data-watts="20">Коммутатор (~20 Вт)</option>
-                        <option value="nas" data-watts="50">NAS (~50 Вт)</option>
-                        <option value="server_1u" data-watts="350">Сервер 1U (~350 Вт)</option>
-                        <option value="server_tower" data-watts="600">Сервер башенный (~600 Вт)</option>
+                    <optgroup data-i18n="grp_network" label="🌐 Сеть и хранение">
+                        <option value="router" data-watts="15" data-i18n="opt_router">Роутер (~15 Вт)</option>
+                        <option value="switch" data-watts="20" data-i18n="opt_switch">Коммутатор (~20 Вт)</option>
+                        <option value="nas" data-watts="50" data-i18n="opt_nas">NAS (~50 Вт)</option>
+                        <option value="server_1u" data-watts="350" data-i18n="opt_server_1u">Сервер 1U (~350 Вт)</option>
+                        <option value="server_tower" data-watts="600" data-i18n="opt_server_tower">Сервер башенный (~600 Вт)</option>
                     </optgroup>
-                    <optgroup label="📺 Прочее">
-                        <option value="tv" data-watts="100">Телевизор (~100 Вт)</option>
-                        <option value="ups_charger" data-watts="50">Зарядка ИБП (~50 Вт)</option>
+                    <optgroup data-i18n="grp_other" label="📺 Прочее">
+                        <option value="tv" data-watts="100" data-i18n="opt_tv">Телевизор (~100 Вт)</option>
+                        <option value="ups_charger" data-watts="50" data-i18n="opt_ups_charger">Зарядка ИБП (~50 Вт)</option>
                     </optgroup>
                 </select>
-                <input type="text" class="custom-name" placeholder="Название..." style="display:none;">
+                <input type="text" class="custom-name" data-i18n-placeholder="customNamePh" placeholder="Название..." style="display:none;">
             </div>
 
             <div class="device-watts">
-                <label>Мощность, Вт</label>
-                <input type="number" class="watts-input" min="1" max="10000" value="0" placeholder="Вт">
+                <label data-i18n="powerLabel">Мощность, Вт</label>
+                <input type="number" class="watts-input" min="1" max="10000" value="0" data-i18n-placeholder="wattsPh" placeholder="Вт">
             </div>
 
             <div class="device-qty">
-                <label>Кол-во</label>
+                <label data-i18n="qtyLabel">Кол-во</label>
                 <input type="number" class="qty-input" min="1" max="100" value="1">
             </div>
 
             <div class="device-subtotal">
-                <label>Итого</label>
+                <label data-i18n="totalLabel">Итого</label>
                 <span class="subtotal-value">0 Вт</span>
             </div>
 
@@ -118,7 +118,7 @@
                 <div class="result-value" id="totalWatts">0 Вт</div>
             </div>
             <div class="result-card">
-                <div class="result-label"><span data-i18n="withMargin">С запасом</span> (<span id="marginLabel">25</span>%)</div>
+                <div class="result-label"><span data-i18n="withMargin">С запасом</span> (<span id="marginValue">25</span>%)</div>
                 <div class="result-value" id="withMargin">0 Вт</div>
             </div>
             <div class="result-card highlight">
