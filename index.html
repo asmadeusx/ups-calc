@@ -9,7 +9,6 @@
 <body>
 
 <div class="container">
-    <!-- Верхняя панель -->
     <div class="top-bar">
         <button id="langToggle" class="toggle-btn" title="Switch Language">🌐 RUS</button>
         <button id="themeToggle" class="toggle-btn" title="Toggle Theme">🌙</button>
@@ -18,7 +17,6 @@
     <h1 data-i18n="title">⚡ Калькулятор мощности ИБП</h1>
     <p class="subtitle" data-i18n="subtitle">Рассчитайте необходимую мощность источника бесперебойного питания</p>
 
-    <!-- Шаблон устройства -->
     <div class="device-template" id="deviceTemplate" style="display:none;">
         <div class="device-row">
             <div class="device-name">
@@ -48,14 +46,12 @@
         </div>
     </div>
 
-    <!-- Список устройств -->
     <div class="devices-list" id="devicesList"></div>
 
     <div class="toolbar">
         <button class="btn-add" id="btnAddDevice" data-i18n="addDevice">＋ Добавить устройство</button>
     </div>
 
-    <!-- Настройки расчёта -->
     <div class="settings-panel">
         <details>
             <summary data-i18n="settingsSummary">⚙ Настройки расчёта</summary>
@@ -74,7 +70,6 @@
         </details>
     </div>
 
-    <!-- Результаты -->
     <div class="results-panel" id="resultsPanel">
         <h2 data-i18n="resultsTitle">📊 Результат расчёта</h2>
 
@@ -100,9 +95,13 @@
         <div class="result-note">
             <p data-i18n="tip">💡 Совет: выбирайте ИБП с номинальной мощностью не менее расчётного значения. Обратите внимание на реальную выходную мощность в ваттах, а не только на ВА.</p>
         </div>
+        
+        <!-- 👇 НОВЫЙ БЛОК: Предупреждение про принтеры/МФУ -->
+        <div class="result-note">
+            <p data-i18n="printerWarning">⚠️ Важно: крайне не рекомендуется подключать лазерные принтеры и МФУ через ИБП. В момент разогрева термопечки их мгновенное энергопотребление может кратковременно достигать 1000–1500 Вт, что вызывает перегрузку инвертора, срабатывание защиты или отключение всего подключённого оборудования.</p>
+        </div>
     </div>
 
-    <!-- Пояснения, логика и дисклеймер -->
     <div class="calc-info-panel">
         <h3 data-i18n="calcInfoTitle">📐 Как производится расчёт</h3>
         

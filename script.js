@@ -1,7 +1,6 @@
 (function () {
     'use strict';
 
-    /* ── DOM элементы ── */
     const devicesList = document.getElementById('devicesList');
     const template = document.getElementById('deviceTemplate');
     const btnAdd = document.getElementById('btnAddDevice');
@@ -17,7 +16,6 @@
     const langToggle = document.getElementById('langToggle');
     const themeToggle = document.getElementById('themeToggle');
 
-    /* ── Словарь переводов ── */
     const dict = {
         ru: {
             pageTitle: "Калькулятор мощности ИБП",
@@ -31,6 +29,7 @@
             resultsTitle: "📊 Результат расчёта", totalLoad: "Общая нагрузка", withMargin: "С запасом",
             recWatts: "Рекомендуемый ИБП (Вт)", recVA: "Рекомендуемый ИБП (ВА)",
             tip: "💡 Совет: выбирайте ИБП с номинальной мощностью не менее расчётного значения. Обратите внимание на реальную выходную мощность в ваттах, а не только на ВА.",
+            printerWarning: "⚠️ Важно: крайне не рекомендуется подключать лазерные принтеры и МФУ через ИБП. В момент разогрева термопечки их мгновенное энергопотребление может кратковременно достигать 1000–1500 Вт, что вызывает перегрузку инвертора, срабатывание защиты или отключение всего подключённого оборудования.",
             calcInfoTitle: "📐 Как производится расчёт", formulasTitle: "🧮 Формулы",
             f1: "Общая нагрузка: Σ (Мощность устройства × Количество)", f2: "С запасом: Общая нагрузка × (1 + Запас / 100)",
             f3: "ИБП (Вт): = Мощность с запасом", f4: "ИБП (ВА): = Мощность с запасом ÷ Коэфф. мощности (PF)",
@@ -40,7 +39,6 @@
             disclaimerText: "Расчёты носят исключительно рекомендательный характер. Фактическое энергопотребление может отличаться от заявленного в зависимости от режима работы, загрузки компонентов, типа блоков питания и состояния электросети. Для критически важных систем обязательно учитывайте пусковые токи, требуемое время автономии и консультируйтесь с профильными инженерами. Разработчик не несёт ответственности за выбор и эксплуатацию оборудования.",
             langBtn: "🌐 RUS", themeDark: "🌙", themeLight: "☀️",
             wattUnit: " Вт", vaUnit: " ВА",
-            // Данные для выпадающего списка
             deviceOptions: [
                 { id: 'custom', group: 'grp_custom', label: '— Своё значение —', watts: 0 },
                 { id: 'office_pc', group: 'grp_computers', label: 'ПК офисный (~250 Вт)', watts: 250 },
@@ -84,6 +82,7 @@
             resultsTitle: "📊 Calculation Result", totalLoad: "Total Load", withMargin: "With Margin",
             recWatts: "Recommended UPS (W)", recVA: "Recommended UPS (VA)",
             tip: "💡 Tip: Choose a UPS with rated power ≥ calculated value. Pay attention to actual output in Watts, not just VA.",
+            printerWarning: "⚠️ Important: It is highly discouraged to connect laser printers and MFPs to a UPS. During the fuser heating cycle, their instantaneous power draw can spike to 1000–1500 W, causing inverter overload, protection triggers, or shutdown of all connected equipment.",
             calcInfoTitle: "📐 How it Works", formulasTitle: "🧮 Formulas",
             f1: "Total Load: Σ (Device Power × Quantity)", f2: "With Margin: Total Load × (1 + Margin / 100)",
             f3: "UPS (W): = Power with Margin", f4: "UPS (VA): = Power with Margin ÷ Power Factor (PF)",
@@ -130,7 +129,6 @@
     let currentTheme = localStorage.getItem('ups_theme') || 'dark';
     let deviceCounter = 0;
 
-    /* ── Рендер выпадающего списка ── */
     function renderDeviceSelect(selectEl, selectedId) {
         selectEl.innerHTML = '';
         const d = dict[currentLang];
@@ -157,27 +155,22 @@
         }
     }
 
-    /* ── Переключение языка ── */
     function applyLanguage(lang) {
         currentLang = lang;
         localStorage.setItem('ups_lang', lang);
         const d = dict[lang];
 
-        // Статичные тексты
         document.querySelectorAll('[data-i18n]').forEach(el => {
             const key = el.getAttribute('data-i18n');
             if (d[key]) el.textContent = d[key];
         });
 
-        // Плейсхолдеры
         document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
             const key = el.getAttribute('data-i18n-placeholder');
             if (d[key]) el.placeholder = d[key];
         });
 
-        // Обновляем все существующие селекты
-        const selects = document.querySelectorAll('.device-select');
-        selects.forEach(sel => {
+        document.querySelectorAll('.device-select').forEach(sel => {
             const currentVal = sel.value;
             renderDeviceSelect(sel, currentVal);
         });
@@ -189,7 +182,6 @@
         recalc();
     }
 
-    /* ── Переключение темы ── */
     function applyTheme(theme) {
         currentTheme = theme;
         localStorage.setItem('ups_theme', theme);
@@ -198,7 +190,6 @@
         themeToggle.textContent = theme === 'dark' ? d.themeDark : d.themeLight;
     }
 
-    /* ── Создание строки устройства ── */
     function createDeviceRow(type, watts) {
         deviceCounter++;
         const clone = template.cloneNode(true);
@@ -241,7 +232,6 @@
         recalc();
     }
 
-    /* ── Пересчёт ── */
     function recalc() {
         let totalWatts = 0;
         const rows = devicesList.querySelectorAll('.device-row');
@@ -266,7 +256,6 @@
         elMarginValue.textContent = Math.round(margin * 100);
     }
 
-    /* ── Инициализация ── */
     langToggle.addEventListener('click', () => applyLanguage(currentLang === 'ru' ? 'en' : 'ru'));
     themeToggle.addEventListener('click', () => applyTheme(currentTheme === 'dark' ? 'light' : 'dark'));
     
@@ -276,8 +265,6 @@
 
     applyTheme(currentTheme);
     applyLanguage(currentLang);
-    
-    // Стартовые устройства
     createDeviceRow('office_pc', 250);
     createDeviceRow('monitor_led', 35);
     createDeviceRow('router', 15);
