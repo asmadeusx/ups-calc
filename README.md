@@ -1,8 +1,6 @@
-```markdown
 # ⚡ UPS Power Calculator / Калькулятор мощности ИБП
 
 A lightweight, zero-dependency web application for calculating the required UPS capacity.
-Легкое веб-приложение без зависимостей для расчета необходимой мощности ИБП.
 
 ---
 
@@ -37,18 +35,12 @@ Simple and intuitive calculator to estimate the required UPS power for your equi
 > **⚠️ Disclaimer:** Calculations are for informational purposes only. Real consumption varies by load, age, and efficiency. For critical infrastructure, consult qualified engineers and account for inrush currents.
 
 ### 📁 Project Structure
-```text
+
 .
 ├── index.html      # Application structure and content
 ├── style.css       # Styling, themes (dark/light), responsiveness
 ├── script.js       # Logic, i18n, calculation engine
 └── README.md       # Documentation
-```
-
-### 🛠️ Tech Stack
-`HTML5` • `CSS3` (Grid, Flexbox, Custom Properties) • `Vanilla JS (ES6+)`
-
----
 
 ## 🇷🇺 Русская версия
 
@@ -81,21 +73,9 @@ Simple and intuitive calculator to estimate the required UPS power for your equi
 > **⚠️ Дисклеймер:** Расчеты носят информационный характер. Фактическое потребление зависит от нагрузки, износа и КПД. Для критически важных систем проконсультируйтесь с инженерами и учитывайте пусковые токи.
 
 ### 📁 Структура проекта
-```text
+
 .
 ├── index.html      # Структура и содержимое приложения
 ├── style.css       # Стили, темы (темная/светлая), адаптивность
 ├── script.js       # Логика, интернационализация, движок расчета
 └── README.md       # Документация
-```
-
-### 🛠️ Технологии
-`HTML5` • `CSS3` (Grid, Flexbox, CSS-переменные) • `Vanilla JS (ES6+)`
-
----
-
-## 📄 License / Лицензия
-
-Distributed under the MIT License. See `LICENSE` for more information.
-Распространяется под лицензией MIT. См. `LICENSE` для подробностей.
-```
