@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Калькулятор мощности ИБП</title>
+    <link rel="stylesheet" href="ups_calc.css">
+</head>
+<body>
+
+<div class="container">
+    <h1>⚡ Калькулятор мощности ИБП</h1>
+    <p class="subtitle">Рассчитайте необходимую мощность источника бесперебойного питания</p>
+
+    <!-- Шаблон устройства -->
+    <div class="device-template" id="deviceTemplate" style="display:none;">
+        <div class="device-row">
+            <div class="device-name">
+                <label>Устройство</label>
+                <select class="device-select">
+                    <option value="custom">— Своё значение —</option>
+                    <optgroup label="💻 Компьютеры">
+                        <option value="office_pc" data-watts="250">ПК офисный (~250 Вт)</option>
+                        <option value="home_pc" data-watts="400">ПК домашний (~400 Вт)</option>
+                        <option value="gaming_pc" data-watts="650">ПК игровой (~650 Вт)</option>
+                        <option value="workstation" data-watts="900">Рабочая станция (~900 Вт)</option>
+                        <option value="mini_pc" data-watts="65">Мини-ПК / неттоп (~65 Вт)</option>
+                    </optgroup>
+                    <optgroup label="🖥 Мониторы">
+                        <option value="monitor_led" data-watts="35">Монитор LED 22–24" (~35 Вт)</option>
+                        <option value="monitor_large" data-watts="65">Монитор 27–32" (~65 Вт)</option>
+                        <option value="monitor_ultrawide" data-watts="80">Монитор ultrawide (~80 Вт)</option>
+                    </optgroup>
+                    <optgroup label="🖨 Периферия">
+                        <option value="ip_phone" data-watts="5">IP-телефон (~5 Вт)</option>
+                        <option value="printer" data-watts="400">Принтер лазерный (~400 Вт)</option>
+                        <option value="ink_printer" data-watts="30">Принтер струйный (~30 Вт)</option>
+                        <option value="mfp" data-watts="600">МФУ (~600 Вт)</option>
+                        <option value="scanner" data-watts="25">Сканер (~25 Вт)</option>
+                        <option value="speakers" data-watts="20">Колонки (~20 Вт)</option>
+                        <option value="webcam" data-watts="5">Веб-камера (~5 Вт)</option>
+                    </optgroup>
+                    <optgroup label="🌐 Сеть и хранение">
+                        <option value="router" data-watts="15">Роутер (~15 Вт)</option>
+                        <option value="switch" data-watts="20">Коммутатор (~20 Вт)</option>
+                        <option value="nas" data-watts="50">NAS (~50 Вт)</option>
+                        <option value="server_1u" data-watts="350">Сервер 1U (~350 Вт)</option>
+                        <option value="server_tower" data-watts="600">Сервер башенный (~600 Вт)</option>
+                    </optgroup>
+                    <optgroup label="📺 Прочее">
+                        <option value="tv" data-watts="100">Телевизор (~100 Вт)</option>
+                        <option value="ups_charger" data-watts="50">Зарядка ИБП (~50 Вт)</option>
+                    </optgroup>
+                </select>
+                <input type="text" class="custom-name" placeholder="Название..." style="display:none;">
+            </div>
+
+            <div class="device-watts">
+                <label>Мощность, Вт</label>
+                <input type="number" class="watts-input" min="1" max="10000" value="0" placeholder="Вт">
+            </div>
+
+            <div class="device-qty">
+                <label>Кол-во</label>
+                <input type="number" class="qty-input" min="1" max="100" value="1">
+            </div>
+
+            <div class="device-subtotal">
+                <label>Итого</label>
+                <span class="subtotal-value">0 Вт</span>
+            </div>
+
+            <div class="device-actions">
+                <button class="btn-remove" title="Удалить устройство">✕</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Список устройств -->
+    <div class="devices-list" id="devicesList">
+        <!-- Строки устройств добавляются через JS -->
+    </div>
+
+    <div class="toolbar">
+        <button class="btn-add" id="btnAddDevice">＋ Добавить устройство</button>
+    </div>
+
+    <!-- Настройки расчёта -->
+    <div class="settings-panel">
+        <details>
+            <summary>⚙ Настройки расчёта</summary>
+            <div class="settings-content">
+                <div class="setting-row">
+                    <label for="marginPercent">Запас мощности, %</label>
+                    <input type="number" id="marginPercent" min="0" max="100" value="25">
+                    <span class="hint">Рекомендуется 20–30%</span>
+                </div>
+                <div class="setting-row">
+                    <label for="powerFactor">Коэфф. мощности (PF)</label>
+                    <input type="number" id="powerFactor" min="0.4" max="1" step="0.05" value="0.65">
+                    <span class="hint">Обычно 0.6–0.7 для линейно-интерактивных</span>
+                </div>
+            </div>
+        </details>
+    </div>
+
+    <!-- Результаты -->
+    <div class="results-panel" id="resultsPanel">
+        <h2>📊 Результат расчёта</h2>
+
+        <div class="results-grid">
+            <div class="result-card">
+                <div class="result-label">Общая нагрузка</div>
+                <div class="result-value" id="totalWatts">0 Вт</div>
+            </div>
+            <div class="result-card">
+                <div class="result-label">С запасом (<span id="marginLabel">25</span>%)</div>
+                <div class="result-value" id="withMargin">0 Вт</div>
+            </div>
+            <div class="result-card highlight">
+                <div class="result-label">Рекомендуемый ИБП (Вт)</div>
+                <div class="result-value" id="recWatts">0 Вт</div>
+            </div>
+            <div class="result-card highlight">
+                <div class="result-label">Рекомендуемый ИБП (ВА)</div>
+                <div class="result-value" id="recVA">0 ВА</div>
+            </div>
+        </div>
+
+        <div class="result-note">
+            <p>💡 <strong>Совет:</strong> выбирайте ИБП с номинальной мощностью не менее расчётного значения.
+            Обратите внимание на реальную выходную мощность в ваттах, а не только на ВА.</p>
+        </div>
+    </div>
+
+    <!-- Пояснения, логика и дисклеймер -->
+    <div class="calc-info-panel">
+        <h3>📐 Как производится расчёт</h3>
+        
+        <div class="calc-info-section">
+            <h4>🧮 Формулы</h4>
+            <ul class="calc-formula-list">
+                <li><strong>Общая нагрузка:</strong> Σ (Мощность устройства × Количество)</li>
+                <li><strong>С запасом:</strong> Общая нагрузка × (1 + Запас / 100)</li>
+                <li><strong>ИБП (Вт):</strong> = Мощность с запасом</li>
+                <li><strong>ИБП (ВА):</strong> = Мощность с запасом ÷ Коэфф. мощности (PF)</li>
+            </ul>
+        </div>
+
+        <div class="calc-info-section">
+            <h4>❓ Почему именно так?</h4>
+            <p>ИБП не рекомендуется нагружать «под завязку». Запас <strong>20–30%</strong> компенсирует пусковые токи, естественный износ батарей, неидеальный КПД инвертора и позволяет оборудованию работать в щадящем режиме. Коэффициент <strong>PF (~0.6–0.7)</strong> учитывает разницу между активной (Вт) и полной (ВА) мощностью, что критично при подборе модели по каталогам, где производители часто указывают только ВА.</p>
+        </div>
+
+        <div class="calc-info-section disclaimer-box">
+            <h4>⚠️ Дисклеймер</h4>
+            <p>Расчёты носят <strong>исключительно рекомендательный характер</strong>. Фактическое энергопотребление может отличаться от заявленного в зависимости от режима работы, загрузки компонентов, типа блоков питания и состояния электросети. Для критически важных систем (серверы, медицинское оборудование, системы безопасности) обязательно учитывайте пусковые токи, требуемое время автономии и консультируйтесь с профильными инженерами. Разработчик не несёт ответственности за выбор и эксплуатацию оборудования.</p>
+        </div>
+    </div>
+
+</div>
+
+<script src="ups_calc.js"></script>
+</body>
+</html>
